@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class GradController {
+    private static boolean pBrojOk = true;
     public TextField fieldNaziv;
     public TextField fieldBrojStanovnika;
     public TextField fieldPBroj;
@@ -58,23 +59,22 @@ public class GradController {
         stage.close();
     }
 
-    public boolean pBrojOk (String pBroj) throws IOException {
-        String adress = "http://c9.etf.unsa.ba/proba/postanskiBroj.php?postanskiBroj=" + pBroj;
-        URL url;
-        try {
-            url = new URL(adress);
-        } catch (MalformedURLException e) {
-            System.out.println("Pogrešna adresa!");
-            System.out.println("Greska" + e);
-            return false;
-        }
-        BufferedReader ulaz = new BufferedReader(new InputStreamReader(url.openStream(),
-                StandardCharsets.UTF_8));
-        return ulaz.readLine().equals("OK");
-    }
-
     public void clickOk(ActionEvent actionEvent) {
         boolean sveOk = true;
+        Thread provjeraPBroj = new Thread (() -> {
+            String adress = "http://c9.etf.unsa.ba/proba/postanskiBroj.php?postanskiBroj=" + fieldPBroj.getText().trim();
+            try {
+                URL url = new URL (adress);
+                BufferedReader ulaz = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
+                if (ulaz.readLine().equals("NOT OK"))
+                    pBrojOk = false;
+            } catch (IOException e) {
+                System.out.println("Pogrešna adresa!");
+                System.out.println("Greska" + e);
+                pBrojOk = false;
+            }
+        });
+        provjeraPBroj.start();
 
         if (fieldNaziv.getText().trim().isEmpty()) {
             fieldNaziv.getStyleClass().removeAll("poljeIspravno");
@@ -84,7 +84,6 @@ public class GradController {
             fieldNaziv.getStyleClass().removeAll("poljeNijeIspravno");
             fieldNaziv.getStyleClass().add("poljeIspravno");
         }
-
 
         int brojStanovnika = 0;
         try {
@@ -102,26 +101,22 @@ public class GradController {
         }
 
         // Validacija poštanskog broja
-        String pBroj = fieldPBroj.getText().trim();
         try {
-            if (pBrojOk(pBroj)) {
-                fieldPBroj.getStyleClass().removeAll("poljeNijeIspravno");
-                fieldPBroj.getStyleClass().add("poljeIspravno");
-            } else {
-                fieldPBroj.getStyleClass().removeAll("poljeIspravno");
-                fieldPBroj.getStyleClass().add("poljeNijeIspravno");
-                sveOk = false;
-            }
-
-        } catch (IOException e) {
-            System.out.println("Greška: " + e);
-            return;
+            provjeraPBroj.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
-
-
+        if (pBrojOk) {
+            fieldPBroj.getStyleClass().removeAll("poljeNijeIspravno");
+            fieldPBroj.getStyleClass().add("poljeIspravno");
+        } else {
+            fieldPBroj.getStyleClass().removeAll("poljeIspravno");
+            fieldPBroj.getStyleClass().add("poljeNijeIspravno");
+            sveOk = false;
+        }
+        pBrojOk = true; // Restart
         if (!sveOk) return;
-
         if (grad == null) grad = new Grad();
         grad.setNaziv(fieldNaziv.getText());
         grad.setBrojStanovnika(Integer.parseInt(fieldBrojStanovnika.getText()));
