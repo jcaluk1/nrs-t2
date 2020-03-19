@@ -13,6 +13,8 @@ import java.util.ArrayList;
 public class GradController {
     public TextField fieldNaziv;
     public TextField fieldBrojStanovnika;
+    public TextField fieldPBroj;
+
     public ChoiceBox<Drzava> choiceDrzava;
     public ObservableList<Drzava> listDrzave;
     private Grad grad;
@@ -28,6 +30,7 @@ public class GradController {
         if (grad != null) {
             fieldNaziv.setText(grad.getNaziv());
             fieldBrojStanovnika.setText(Integer.toString(grad.getBrojStanovnika()));
+            fieldPBroj.setText(String.valueOf(grad.getPbroj()));
             // choiceDrzava.getSelectionModel().select(grad.getDrzava());
             // ovo ne radi jer grad.getDrzava() nije identički jednak objekat kao član listDrzave
             for (Drzava drzava : listDrzave)
@@ -75,6 +78,8 @@ public class GradController {
             fieldBrojStanovnika.getStyleClass().removeAll("poljeNijeIspravno");
             fieldBrojStanovnika.getStyleClass().add("poljeIspravno");
         }
+
+        // Validacija poštanskog broja
 
         if (!sveOk) return;
 
