@@ -12,6 +12,7 @@
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
+      <ColumnConstraints minWidth="10.0" prefWidth="150.0" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints />
@@ -36,6 +37,12 @@
       </ButtonBar>
       <Label text="Poštanski broj:" GridPane.rowIndex="2" />
       <TextField fx:id="fieldPBroj" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <ListView fx:id="listViewZnam" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowSpan="4" />
+      <Button fx:id="btnDodajZnamenitost" mnemonicParsing="false" onAction="#btnDodajZnam" text="Dodaj znamenitost" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets right="5.0" />
+         </GridPane.margin>
+      </Button>
    </children>
    <opaqueInsets>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

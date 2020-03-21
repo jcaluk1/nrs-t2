@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -26,6 +27,9 @@ public class GradController {
     public ChoiceBox<Drzava> choiceDrzava;
     public ObservableList<Drzava> listDrzave;
     private Grad grad;
+
+    public ListView<Znamenitost> listViewZnam;
+    private ObservableList<Znamenitost> znamenitosti;
 
     public GradController(Grad grad, ArrayList<Drzava> drzave) {
         this.grad = grad;
@@ -57,6 +61,10 @@ public class GradController {
         grad = null;
         Stage stage = (Stage) fieldNaziv.getScene().getWindow();
         stage.close();
+    }
+
+    public void btnDodajZnam (ActionEvent actionEvent) {
+
     }
 
     public void clickOk(ActionEvent actionEvent) {
