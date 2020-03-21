@@ -27,8 +27,8 @@ public class GlavnaController {
     public TableColumn colGradId;
     public TableColumn colGradNaziv;
     public TableColumn colGradStanovnika;
-    public TableColumn<Grad,String> colGradDrzava;
     public TableColumn colPBroj;    // added
+    public TableColumn<Grad,String> colGradDrzava;
     private GeografijaDAO dao;
     private ObservableList<Grad> listGradovi;
 
