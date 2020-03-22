@@ -53,7 +53,7 @@ public class GlavnaController {
         Parent root = null;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/grad.fxml"));
-            GradController gradController = new GradController(null, dao.drzave());
+            GradControllerDodaj gradController = new GradControllerDodaj(null, dao.drzave());
             loader.setController(gradController);
             root = loader.load();
             stage.setTitle("Grad");
@@ -102,12 +102,11 @@ public class GlavnaController {
     public void actionIzmijeniGrad(ActionEvent actionEvent) {
         Grad grad = tableViewGradovi.getSelectionModel().getSelectedItem();
         if (grad == null) return;
-
         Stage stage = new Stage();
         Parent root = null;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/grad.fxml"));
-            GradController gradController = new GradController(grad, dao.drzave());
+            GradControllerIzmjeni gradController = new GradControllerIzmjeni(grad, dao.drzave(), dao.dajZnamenostiZaGrad(grad));
             loader.setController(gradController);
             root = loader.load();
             stage.setTitle("Grad");

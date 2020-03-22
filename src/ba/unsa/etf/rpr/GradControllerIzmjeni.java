@@ -4,21 +4,25 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import javax.imageio.IIOException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-public class GradController {
+import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
+
+public class GradControllerIzmjeni {
     private static boolean pBrojOk = true;
     public TextField fieldNaziv;
     public TextField fieldBrojStanovnika;
@@ -29,22 +33,22 @@ public class GradController {
     private Grad grad;
 
     public ListView<Znamenitost> listViewZnam;
-    private ObservableList<Znamenitost> znamenitosti;
+    public ObservableList<Znamenitost> znamenitostiObs;
 
-    public GradController(Grad grad, ArrayList<Drzava> drzave) {
+    public GradControllerIzmjeni(Grad grad, ArrayList<Drzava> drzave, ArrayList<Znamenitost> znamenitosti) {
         this.grad = grad;
         listDrzave = FXCollections.observableArrayList(drzave);
+        znamenitostiObs = FXCollections.observableArrayList(znamenitosti);
     }
 
     @FXML
     public void initialize() {
         choiceDrzava.setItems(listDrzave);
+        listViewZnam.setItems(znamenitostiObs);
         if (grad != null) {
             fieldNaziv.setText(grad.getNaziv());
             fieldBrojStanovnika.setText(Integer.toString(grad.getBrojStanovnika()));
             fieldPBroj.setText(String.valueOf(grad.getPbroj()));
-            // choiceDrzava.getSelectionModel().select(grad.getDrzava());
-            // ovo ne radi jer grad.getDrzava() nije identički jednak objekat kao član listDrzave
             for (Drzava drzava : listDrzave)
                 if (drzava.getId() == grad.getDrzava().getId())
                     choiceDrzava.getSelectionModel().select(drzava);
@@ -64,7 +68,31 @@ public class GradController {
     }
 
     public void btnDodajZnam (ActionEvent actionEvent) {
+        Stage stage = new Stage();
+        Parent root = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/znamenitost.fxml"));
+            ZnamenitostController znamenitostController = new ZnamenitostController(grad);
+            loader.setController(znamenitostController);
+            root = loader.load();
+            stage.setTitle("Znamenitost");
+            stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.setResizable(true);
+            stage.show();
 
+            stage.setOnHiding(event -> {
+                Znamenitost novaZnamenitost = znamenitostController.getZnamenitost();
+                if (novaZnamenitost != null) {
+                    GeografijaDAO dao = GeografijaDAO.getInstance();
+                    dao.dodajZnamenitost(novaZnamenitost);
+                    znamenitostiObs.add(novaZnamenitost);
+                }
+            });
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void clickOk(ActionEvent actionEvent) {

@@ -30,4 +30,7 @@ CREATE TABLE IF NOT EXISTS `znamenitost` (
 	FOREIGN KEY(`grad_id`) REFERENCES `grad`,
 	PRIMARY KEY(`id`)
 );
+INSERT INTO `znamenitost` VALUES (1,'Sebilj','put',5);
+INSERT INTO `znamenitost` VALUES (2,'Vjecnica','put',5);
+INSERT INTO `znamenitost` VALUES (3,'Most','put',4);
 COMMIT;
