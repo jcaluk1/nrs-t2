@@ -34,7 +34,7 @@ public class OdaberiSlikuController {
 
         @Override
         public void run() {
-            searchAndUpdate(pattern,directory);
+            searchAndUpdate(pattern,new File(directory));
         }
     }
 
@@ -52,20 +52,17 @@ public class OdaberiSlikuController {
         });
     }
 
-    public void searchAndUpdate(String pattern, String startDirectory) {
+    public void searchAndUpdate(String pattern, File startDirectory) {
         if (!exit) {
-            File file = new File(startDirectory);
-            String filePath = file.getAbsolutePath();
-            if (file.isDirectory() && !file.isHidden()) {
-                try {
-                    for (File f : file.listFiles()) {
-                        searchAndUpdate(pattern, f.getAbsolutePath());
-                    }
-                } catch (NullPointerException e) {}
-            } else if (
-                    (file.isFile() && filePath.toLowerCase().contains(pattern)) &&
-                            (filePath.endsWith("jpg") || filePath.endsWith("png") || filePath.endsWith("jpeg"))
-            ) {
+            File[] files = startDirectory.listFiles();
+            String filePath = startDirectory.getAbsolutePath();
+            if (files != null && files.length > 0) {
+                // startDirectory nije skriveni folder, niti fajl
+                for (File f : files)
+                    searchAndUpdate(pattern, f);
+            }
+            else if (startDirectory.isFile() && filePath.toLowerCase().contains(pattern.toLowerCase()) &&
+                     (filePath.endsWith("jpg") || filePath.endsWith("png") || filePath.endsWith("jpeg"))) {
                 Platform.runLater(() -> {
                     putanjeObs.add(filePath);
                     listVievPutanje.refresh();
@@ -75,6 +72,7 @@ public class OdaberiSlikuController {
     }
 
     public void clickOK(ActionEvent actionEvent) {
+        threadFind.stopThread();
         path = fldPath.getText();
         Stage stage = (Stage) fldPath.getScene().getWindow();
         stage.close();
@@ -83,7 +81,7 @@ public class OdaberiSlikuController {
     public void clickTrazi (ActionEvent actionEvent) {
         exit = false;
         putanjeObs.clear();
-        String pattern = fldPattern.getText().toLowerCase();
+        String pattern = fldPattern.getText();
         String directory = System.getProperty("user.home");
         threadFind = new ThreadFind(pattern,directory);
         threadFind.start();
