@@ -20,7 +20,7 @@
     <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="Naziv:" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+      <Label text="%name" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
@@ -49,12 +49,12 @@
             <Insets top="5.0" />
          </GridPane.margin>
          <children>
-            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnOdaberiSliku" prefWidth="120.0" text="Odaberi sliku">
+            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnOdaberiSliku" prefWidth="120.0" text="%choose.picture">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Button>
-            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnSacuvajPromjene" prefWidth="120.0" text="Sačuvaj promjene">
+            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnSacuvajPromjene" prefWidth="120.0" text="%save.change">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>

@@ -7,17 +7,21 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/glavna.fxml"));
+        Locale locale = Locale.getDefault();
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation", locale);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/glavna.fxml"), bundle);
         GlavnaController ctrl = new GlavnaController();
         loader.setController(ctrl);
         Parent root = loader.load();
-        primaryStage.setTitle("Gradovi svijeta");
+        primaryStage.setTitle(bundle.getString("window.main"));
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
@@ -25,4 +29,9 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+
 }
+/*
+    Locale locale = new Locale("en", "UK");
+    ResourceBundle bundle = ResourceBundle.getBundle("strings", locale);*/

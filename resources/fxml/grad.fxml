@@ -23,23 +23,23 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Label text="Naziv:" />
+      <Label text="%name" />
       <TextField fx:id="fieldNaziv" GridPane.columnIndex="1" />
-      <Label text="Broj stanovnika:" GridPane.rowIndex="1" />
+      <Label text="%noc" GridPane.rowIndex="1" />
       <TextField fx:id="fieldBrojStanovnika" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Label text="Država:" GridPane.rowIndex="3" />
+      <Label text="%country" GridPane.rowIndex="3" />
       <ChoiceBox fx:id="choiceDrzava" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Label text="Poštanski broj:" GridPane.rowIndex="2" />
+      <Label text="%pn" GridPane.rowIndex="2" />
       <TextField fx:id="fieldPBroj" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <ListView fx:id="listViewZnam" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowSpan="4" />
-      <Button fx:id="btnDodajZnamenitost" maxHeight="15.0" minHeight="25.0" mnemonicParsing="false" onAction="#btnDodajZnam" prefHeight="25.0" text="Dodaj znamenitost" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+      <Button fx:id="btnDodajZnamenitost" maxHeight="15.0" minHeight="25.0" mnemonicParsing="false" onAction="#btnDodajZnam" prefHeight="25.0" text="%add.attraction" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
       </Button>
       <HBox alignment="CENTER" maxHeight="100.0" prefHeight="44.0" prefWidth="239.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
          <children>
-            <Button fx:id="btnOk" alignment="CENTER" maxHeight="15.0" minHeight="25.0" mnemonicParsing="false" onAction="#clickOk" prefHeight="15.0" prefWidth="100.0" text="Ok">
+            <Button fx:id="btnOk" alignment="CENTER" maxHeight="15.0" minHeight="25.0" mnemonicParsing="false" onAction="#clickOk" prefHeight="15.0" prefWidth="100.0" text="%ok">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
@@ -47,7 +47,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Button>
-            <Button fx:id="btnCancel" maxHeight="15.0" minHeight="25.0" mnemonicParsing="false" onAction="#clickCancel" prefHeight="15.0" prefWidth="100.0" text="Cancel">
+            <Button fx:id="btnCancel" maxHeight="15.0" minHeight="25.0" mnemonicParsing="false" onAction="#clickCancel" prefHeight="15.0" prefWidth="100.0" text="%cancel">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>

@@ -6,23 +6,25 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import net.sf.jasperreports.engine.JRException;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
-public class GlavnaController {
+public class GlavnaController implements Initializable {
 
     public TableView<Grad> tableViewGradovi;
     public TableColumn colGradId;
@@ -33,21 +35,25 @@ public class GlavnaController {
     private GeografijaDAO dao;
     private ObservableList<Grad> listGradovi;
 
+    public ResourceBundle resourceBundle;
+
     public GlavnaController() {
         dao = GeografijaDAO.getInstance();
         listGradovi = FXCollections.observableArrayList(dao.gradovi());
     }
 
-    @FXML
-    public void initialize() {
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.resourceBundle = resourceBundle;
         tableViewGradovi.setItems(listGradovi);
         colGradId.setCellValueFactory(new PropertyValueFactory("id"));
         colGradNaziv.setCellValueFactory(new PropertyValueFactory("naziv"));
         colGradStanovnika.setCellValueFactory(new PropertyValueFactory("brojStanovnika"));
         colPBroj.setCellValueFactory(new PropertyValueFactory("pbroj"));
-
         colGradDrzava.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDrzava().getNaziv()));
     }
+
 
     public void actionDodajGrad(ActionEvent actionEvent) {
         Stage stage = new Stage();
@@ -152,6 +158,47 @@ public class GlavnaController {
         }
     }
 
+    public void actionPromijeniJezik (ActionEvent actionEvent) {
+        String engleski = resourceBundle.getString("english");
+        String bosanski = resourceBundle.getString("bosnian");
+
+        String[] jezici = {engleski, bosanski};
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(jezici[0], jezici[1]);
+        dialog.setTitle(resourceBundle.getString("dialog.title"));
+        dialog.setHeaderText(resourceBundle.getString("dialog.message"));
+        Optional<String> result = dialog.showAndWait();
+
+        // Da li je selektovan razlicit jezik? Ako jest resetujemo pocetni stage
+        result.ifPresent(jezik -> {
+            String language = "en";
+            String country = "UK";
+            if (jezik.equals(jezici[1])) {
+                language = "bs";
+                country = "BA";
+            }
+            if (!language.equals(resourceBundle.getLocale().getLanguage())) {
+                // Pokrecemo novi stage
+                Stage stageNovi = new Stage();
+                Locale locale = new Locale(language, country);
+                ResourceBundle bundle = ResourceBundle.getBundle("Translation", locale);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/glavna.fxml"), bundle);
+                GlavnaController ctrl = new GlavnaController();
+                loader.setController(ctrl);
+                try {
+                    Parent root = loader.load();
+                    stageNovi.setTitle(bundle.getString("window.main"));
+                    stageNovi.setScene(new Scene(root, 600, 400));
+                    stageNovi.show();
+
+                    // Zatvaramo stari stage
+                    Stage stage = (Stage) tableViewGradovi.getScene().getWindow();
+                    stage.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
     // Metoda za potrebe testova, vraća bazu u polazno stanje
     public void resetujBazu() {

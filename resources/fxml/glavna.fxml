@@ -8,22 +8,23 @@
    <center>
       <TableView fx:id="tableViewGradovi" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="colGradId" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="colGradNaziv" prefWidth="100.0" text="Naziv" />
-          <TableColumn fx:id="colGradStanovnika" prefWidth="90.0" text="Stanovnika" />
-          <TableColumn fx:id="colGradDrzava" prefWidth="120.0" text="Država" />
-          <TableColumn fx:id="colPBroj" prefWidth="100.0" text="Poštanski broj" />
+          <TableColumn fx:id="colGradId" prefWidth="75.0" text="Id" />
+          <TableColumn fx:id="colGradNaziv" prefWidth="100.0" text="%name" />
+          <TableColumn fx:id="colGradStanovnika" prefWidth="90.0" text="%noc" />
+          <TableColumn fx:id="colGradDrzava" prefWidth="120.0" text="%country" />
+          <TableColumn fx:id="colPBroj" prefWidth="100.0" text="%pn" />
         </columns>
       </TableView>
    </center>
    <right>
       <VBox prefHeight="200.0" prefWidth="120.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnDodajGrad" mnemonicParsing="false" onAction="#actionDodajGrad" prefWidth="Infinity" text="Dodaj grad" />
-            <Button fx:id="btnDodajDrzavu" mnemonicParsing="false" onAction="#actionDodajDrzavu" prefWidth="Infinity" text="Dodaj državu" />
-            <Button fx:id="btnIzmijeniGrad" mnemonicParsing="false" onAction="#actionIzmijeniGrad" prefWidth="Infinity" text="Izmijeni grad" />
-            <Button fx:id="btnObrisiGrad" mnemonicParsing="false" onAction="#actionObrisiGrad" prefWidth="Infinity" text="Obriši grad" />
-            <Button mnemonicParsing="false" onAction="#actionNapraviIzvjestaj" prefWidth="Infinity" text="Izvjestaj" />
+            <Button fx:id="btnDodajGrad" mnemonicParsing="false" onAction="#actionDodajGrad" prefWidth="Infinity" text="%add.city" />
+            <Button fx:id="btnDodajDrzavu" mnemonicParsing="false" onAction="#actionDodajDrzavu" prefWidth="Infinity" text="%add.country" />
+            <Button fx:id="btnIzmijeniGrad" mnemonicParsing="false" onAction="#actionIzmijeniGrad" prefWidth="Infinity" text="%change.city" />
+            <Button fx:id="btnObrisiGrad" mnemonicParsing="false" onAction="#actionObrisiGrad" prefWidth="Infinity" text="%delete.city" />
+            <Button mnemonicParsing="false" onAction="#actionNapraviIzvjestaj" prefWidth="Infinity" text="%report" />
+            <Button mnemonicParsing="false" onAction="#actionPromijeniJezik" prefWidth="Infinity" text="%change.language" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

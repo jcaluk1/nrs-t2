@@ -20,7 +20,7 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="Enter image path:" GridPane.halignment="RIGHT">
+      <Label text="%enter.path" GridPane.halignment="RIGHT">
          <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="15.0" top="5.0" />
          </GridPane.margin>
@@ -36,7 +36,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </TextField>
-      <Label layoutX="41.0" layoutY="17.0" text="Enter pattern:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+      <Label layoutX="41.0" layoutY="17.0" text="%enter.pattern" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
@@ -54,12 +54,12 @@
       </TextField>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <children>
-          <Button mnemonicParsing="false" onAction="#clickTrazi" prefWidth="120.0" text="Trazi">
+          <Button mnemonicParsing="false" onAction="#clickTrazi" prefWidth="120.0" text="%find">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Button>
-            <Button mnemonicParsing="false" onAction="#clickOK" prefWidth="120.0" text="OK">
+            <Button mnemonicParsing="false" onAction="#clickOK" prefWidth="120.0" text="%ok">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
