@@ -53,8 +53,8 @@ public class GlavnaController {
         Parent root = null;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/grad.fxml"));
-            GradControllerDodaj gradController = new GradControllerDodaj(null, dao.drzave());
-            loader.setController(gradController);
+            GradControllerDodaj gradControllerDodaj = new GradControllerDodaj(null, dao.drzave());
+            loader.setController(gradControllerDodaj);
             root = loader.load();
             stage.setTitle("Grad");
             stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
@@ -62,7 +62,7 @@ public class GlavnaController {
             stage.show();
 
             stage.setOnHiding( event -> {
-                Grad grad = gradController.getGrad();
+                Grad grad = gradControllerDodaj.getGrad();
                 if (grad != null) {
                     dao.dodajGrad(grad);
                     listGradovi.setAll(dao.gradovi());

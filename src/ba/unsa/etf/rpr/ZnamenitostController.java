@@ -26,7 +26,7 @@ public class ZnamenitostController {
 
     private Grad grad;
     private Znamenitost znamenitost;
-    private final String putanjaError = "C:/Users/hp/Downloads/rpr19-2parc-1t/rpr19-2parc-1t/resources/imgs/upload.png";
+    private String putanja = "";
 
     public ZnamenitostController (Grad g) {
         this.grad = g;
@@ -35,7 +35,7 @@ public class ZnamenitostController {
     @FXML
     public void initialize() {
         try {
-            Image img = new Image(new FileInputStream(putanjaError));
+            Image img = new Image(new FileInputStream("C:/Users/hp/Downloads/rpr19-2parc-1t/rpr19-2parc-1t/resources/imgs/upload.png"));
             imgFrame.setImage(img);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -61,11 +61,8 @@ public class ZnamenitostController {
                 if (putanjaFile.exists() && (putanja.endsWith("png") || putanja.endsWith("jpg"))) {
                     try {
                         imgFrame.setImage(new Image(new FileInputStream(putanja)));
-                        znamenitost = new Znamenitost();
-                        znamenitost.setSlika(putanja);
-                        System.out.println("Sve ok");
+                        this.putanja = putanja;
                     } catch (FileNotFoundException e) {
-                        znamenitost = null;
                         e.printStackTrace();
                     }
                 }
@@ -85,14 +82,12 @@ public class ZnamenitostController {
             fldNaziv.getStyleClass().removeAll("poljeNijeIspravno");
             fldNaziv.getStyleClass().add("poljeIspravno");
         }
-
-        if (znamenitost == null)
-            sveOk = false;
-
-        if (!sveOk)
+        if (!sveOk && putanja.isEmpty())
             return;
 
         // Znamenitost je ok
+        znamenitost = new Znamenitost();
+        znamenitost.setSlika(putanja);
         znamenitost.setNaziv(fldNaziv.getText());
         znamenitost.setGrad(grad);
 
