@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -16,8 +17,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class GradControllerDodaj {
+public class GradControllerDodaj implements Initializable {
     private static boolean pBrojOk = true;
     public TextField fieldNaziv;
     public TextField fieldBrojStanovnika;
@@ -27,13 +29,16 @@ public class GradControllerDodaj {
     public ObservableList<Drzava> listDrzave;
     private Grad grad;
 
+    private ResourceBundle resourceBundle;
+
     public GradControllerDodaj(Grad grad, ArrayList<Drzava> drzave) {
         this.grad = grad;
         listDrzave = FXCollections.observableArrayList(drzave);
     }
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.resourceBundle = resourceBundle;
         choiceDrzava.setItems(listDrzave);
         if (grad != null) {
             fieldNaziv.setText(grad.getNaziv());

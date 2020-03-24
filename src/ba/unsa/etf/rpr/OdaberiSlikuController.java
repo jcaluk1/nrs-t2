@@ -5,12 +5,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class OdaberiSlikuController {
+public class OdaberiSlikuController implements Initializable {
     public TextField fldPath;
     private String path = "";
 
@@ -19,6 +22,7 @@ public class OdaberiSlikuController {
     public ListView<String> listVievPutanje;
     private ObservableList<String> putanjeObs;
     private static volatile boolean exit = false;
+    private ResourceBundle resourceBundle;
 
     private class ThreadFind extends Thread {
         private String pattern, directory;
@@ -41,8 +45,9 @@ public class OdaberiSlikuController {
     ThreadFind threadFind;
 
 
-    @FXML
-    public void initialize () {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.resourceBundle = resourceBundle;
         putanjeObs = FXCollections.observableArrayList();
         listVievPutanje.setItems(putanjeObs);
 

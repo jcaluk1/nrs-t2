@@ -3,6 +3,7 @@ package ba.unsa.etf.rpr;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PopupControl;
@@ -15,11 +16,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
-public class ZnamenitostController {
+public class ZnamenitostController implements Initializable {
 
     public TextField fldNaziv;
     public ImageView imgFrame;
@@ -27,13 +30,15 @@ public class ZnamenitostController {
     private Grad grad;
     private Znamenitost znamenitost;
     private String putanja = "";
+    private ResourceBundle resourceBundle;
 
     public ZnamenitostController (Grad g) {
         this.grad = g;
     }
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.resourceBundle = resourceBundle;
         try {
             Image img = new Image(new FileInputStream("C:/Users/hp/Downloads/rpr19-2parc-1t/rpr19-2parc-1t/resources/imgs/upload.png"));
             imgFrame.setImage(img);
@@ -46,11 +51,11 @@ public class ZnamenitostController {
         Stage stage = new Stage();
         Parent root = null;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/odaberiSliku.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/odaberiSliku.fxml"),resourceBundle);
             OdaberiSlikuController odaberiSlikuController = new OdaberiSlikuController();
             loader.setController(odaberiSlikuController);
             root = loader.load();
-            stage.setTitle("Znamenitost");
+            stage.setTitle(resourceBundle.getString("window.choose.picture"));
             stage.setScene(new Scene(root, PopupControl.USE_COMPUTED_SIZE, PopupControl.USE_COMPUTED_SIZE));
             stage.setResizable(true);
             stage.show();

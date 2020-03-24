@@ -29,9 +29,5 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-
 }
-/*
-    Locale locale = new Locale("en", "UK");
-    ResourceBundle bundle = ResourceBundle.getBundle("strings", locale);*/
+

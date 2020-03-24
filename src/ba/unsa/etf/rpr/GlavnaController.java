@@ -35,7 +35,7 @@ public class GlavnaController implements Initializable {
     private GeografijaDAO dao;
     private ObservableList<Grad> listGradovi;
 
-    public ResourceBundle resourceBundle;
+    private ResourceBundle resourceBundle;
 
     public GlavnaController() {
         dao = GeografijaDAO.getInstance();
@@ -59,11 +59,11 @@ public class GlavnaController implements Initializable {
         Stage stage = new Stage();
         Parent root = null;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/grad.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/grad.fxml"),resourceBundle);
             GradControllerDodaj gradControllerDodaj = new GradControllerDodaj(null, dao.drzave());
             loader.setController(gradControllerDodaj);
             root = loader.load();
-            stage.setTitle("Grad");
+            stage.setTitle(resourceBundle.getString("window.city"));
             stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.setResizable(true);
             stage.show();
@@ -85,11 +85,11 @@ public class GlavnaController implements Initializable {
         Stage stage = new Stage();
         Parent root = null;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/drzava.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/drzava.fxml"), resourceBundle);
             DrzavaController drzavaController = new DrzavaController(null, dao.gradovi());
             loader.setController(drzavaController);
             root = loader.load();
-            stage.setTitle("Država");
+            stage.setTitle(resourceBundle.getString("window.country"));
             stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.setResizable(true);
             stage.show();
@@ -112,11 +112,11 @@ public class GlavnaController implements Initializable {
         Stage stage = new Stage();
         Parent root = null;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/grad.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/grad.fxml"), resourceBundle);
             GradControllerIzmjeni gradController = new GradControllerIzmjeni(grad, dao.drzave(), dao.dajZnamenostiZaGrad(grad));
             loader.setController(gradController);
             root = loader.load();
-            stage.setTitle("Grad");
+            stage.setTitle(resourceBundle.getString("window.city"));
             stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.setResizable(true);
             stage.show();
@@ -138,9 +138,9 @@ public class GlavnaController implements Initializable {
         if (grad == null) return;
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Potvrda brisanja");
-        alert.setHeaderText("Brisanje grada "+grad.getNaziv());
-        alert.setContentText("Da li ste sigurni da želite obrisati grad " +grad.getNaziv()+"?");
+        alert.setTitle(resourceBundle.getString("alert.tittle"));
+        alert.setHeaderText(resourceBundle.getString("alert.header")+grad.getNaziv());
+        alert.setContentText(resourceBundle.getString("alert.conntent")+grad.getNaziv()+"?");
         alert.setResizable(true);
 
         Optional<ButtonType> result = alert.showAndWait();

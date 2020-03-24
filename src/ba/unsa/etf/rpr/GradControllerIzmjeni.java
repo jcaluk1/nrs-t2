@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
@@ -19,10 +20,10 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
-
-public class GradControllerIzmjeni {
+public class GradControllerIzmjeni implements Initializable {
     public TextField fieldNaziv;
     public TextField fieldBrojStanovnika;
     public TextField fieldPBroj;
@@ -33,6 +34,7 @@ public class GradControllerIzmjeni {
 
     public ListView<Znamenitost> listViewZnam;
     public ObservableList<Znamenitost> znamenitostiObs;
+    private ResourceBundle resourceBundle;
 
     public GradControllerIzmjeni(Grad grad, ArrayList<Drzava> drzave, ArrayList<Znamenitost> znamenitosti) {
         this.grad = grad;
@@ -40,8 +42,9 @@ public class GradControllerIzmjeni {
         znamenitostiObs = FXCollections.observableArrayList(znamenitosti);
     }
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.resourceBundle = resourceBundle;
         choiceDrzava.setItems(listDrzave);
         listViewZnam.setItems(znamenitostiObs);
         if (grad != null) {
@@ -70,11 +73,11 @@ public class GradControllerIzmjeni {
         Stage stage = new Stage();
         Parent root = null;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/znamenitost.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/znamenitost.fxml"), resourceBundle);
             ZnamenitostController znamenitostController = new ZnamenitostController(grad);
             loader.setController(znamenitostController);
             root = loader.load();
-            stage.setTitle("Znamenitost");
+            stage.setTitle(resourceBundle.getString("window.attraction"));
             stage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.setResizable(true);
             stage.show();
