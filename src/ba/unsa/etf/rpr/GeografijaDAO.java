@@ -25,7 +25,9 @@ public class GeografijaDAO {
 
     private GeografijaDAO() {
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:baza.db");
+            //conn = DriverManager.getConnection("jdbc:sqlite:baza.db");
+            String path = "jdbc:sqlite:" + System.getProperty("user.home") + "/baza.db";
+            conn = DriverManager.getConnection(path);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -87,7 +89,10 @@ public class GeografijaDAO {
     private void regenerisiBazu() {
         Scanner ulaz = null;
         try {
-            ulaz = new Scanner(new FileInputStream("baza.db.sql"));
+           // ulaz = new Scanner(new FileInputStream("baza.db.sql"));
+            String path = getClass().getResource("/sql/baza.sql").getFile();
+            ulaz = new Scanner(new FileInputStream(path));
+
             String sqlUpit = "";
             while (ulaz.hasNext()) {
                 sqlUpit += ulaz.nextLine();
