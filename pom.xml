@@ -16,9 +16,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-
-
-
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -88,7 +85,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        ba.unsa.etf.rpr.Main
+                                        ba.unsa.etf.rpr.NewMain
                                     </mainClass>
                                 </manifest>
                             </archive>
