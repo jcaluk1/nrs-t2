@@ -6,16 +6,17 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.swing.JRViewer;
 
 import javax.swing.*;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Izvjestaj extends JFrame {
     public void showReport(Connection conn) throws JRException {
-        String reportSrcFile = getClass().getResource("/reports/grad.jrxml").getFile();
-        String reportsDir = getClass().getResource("/reports/").getFile();
+        InputStream reportSrcFile = getClass().getResourceAsStream("/reports/grad.jrxml");
+        InputStream reportsDir =  getClass().getResourceAsStream("/reports/cherry.jpg)");
         JasperReport jasperReport = JasperCompileManager.compileReport(reportSrcFile);
-// Fields for resources path
+        // Fields for resources path
         HashMap<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("reportsDirPath", reportsDir);
         ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();

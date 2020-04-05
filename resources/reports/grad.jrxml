@@ -44,7 +44,7 @@ ORDER BY broj_stanovnika]]>
 	</background>
 	<title>
 		<band height="132" splitType="Stretch">
-			<image>
+			<image onErrorType="Blank">
 				<reportElement x="456" y="0" width="99" height="132" uuid="97705585-a0b5-4ec7-86f3-ae10c220e6af"/>
 				<imageExpression><![CDATA[new File($P{reportsDirPath},"cherry.jpg")]]></imageExpression>
 			</image>
