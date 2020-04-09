@@ -1,4 +1,4 @@
-/*
+
 package ba.unsa.etf.rpr;
 
 import javafx.fxml.FXMLLoader;
@@ -16,6 +16,8 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +26,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(ApplicationExtension.class)
 class GradControllerTest {
     Stage theStage;
-    GradController ctrl;
+    GradControllerDodaj ctrl;
+    ResourceBundle bundle = ResourceBundle.getBundle("Translation", Locale.getDefault());
 
     @Start
     public void start (Stage stage) throws Exception {
@@ -34,8 +37,8 @@ class GradControllerTest {
         dbfile.delete();
         GeografijaDAO dao = GeografijaDAO.getInstance();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/grad.fxml"));
-        ctrl = new GradController(null, dao.drzave());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/grad.fxml"), bundle);
+        ctrl = new GradControllerDodaj(null, dao.drzave());
         loader.setController(ctrl);
         Parent root = loader.load();
         stage.setTitle("Grad");
@@ -68,6 +71,7 @@ class GradControllerTest {
 
         // Klik na dugme ok
         robot.clickOn("#btnOk");
+        robot.sleep(5000);
 
         // Sada je naziv validan
         ime = robot.lookup("#fieldNaziv").queryAs(TextField.class);
@@ -92,8 +96,12 @@ class GradControllerTest {
         robot.press(KeyCode.CONTROL).press(KeyCode.A).release(KeyCode.A).release(KeyCode.CONTROL);
         robot.write("350000");
 
+        robot.clickOn("#fieldPBroj");
+        robot.write("77240");
+
         // Klik na dugme ok
         robot.clickOn("#btnOk");
+        robot.sleep(5000);
 
         // Sada je i broj stanovnika validan, forma se zatvorila
         assertFalse(theStage.isShowing());
@@ -109,13 +117,16 @@ class GradControllerTest {
         robot.clickOn("#choiceDrzava");
         robot.clickOn("Francuska");
 
+        robot.clickOn("#fieldPBroj");
+        robot.write("77240");
+
         // Klik na dugme ok
         robot.clickOn("#btnOk");
-
+        robot.sleep(5000);
         Grad sarajevo = ctrl.getGrad();
         assertEquals("Sarajevo", sarajevo.getNaziv());
         assertEquals(350000, sarajevo.getBrojStanovnika());
         assertEquals("Francuska", sarajevo.getDrzava().getNaziv());
 
     }
-}*/
+}

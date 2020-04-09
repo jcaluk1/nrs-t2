@@ -15,6 +15,8 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,10 +25,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class GlavnaControllerTest {
     Stage theStage;
     GlavnaController ctrl;
+    ResourceBundle bundle = ResourceBundle.getBundle("Translation", Locale.getDefault());
 
     @Start
     public void start (Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/glavna.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/glavna.fxml"), bundle);
         ctrl = new GlavnaController();
         loader.setController(ctrl);
         Parent root = loader.load();
@@ -87,8 +90,14 @@ class GlavnaControllerTest {
         robot.clickOn("#fieldBrojStanovnika");
         robot.write("350000");
 
+        robot.clickOn("#fieldPBroj");
+        robot.write("77240");
+
         // Klik na dugme Ok
         robot.clickOn("#btnOk");
+
+        robot.sleep(5000);
+
 
         // Da li je Sarajevo dodano u bazu?
         GeografijaDAO dao = GeografijaDAO.getInstance();
@@ -128,6 +137,8 @@ class GlavnaControllerTest {
 
         // Klik na dugme Ok
         robot.clickOn("#btnOk");
+
+        robot.sleep(5000);
 
         // Da li je promijenjen broj stanovnika Graza?
         GeografijaDAO dao = GeografijaDAO.getInstance();

@@ -120,9 +120,8 @@ public class GlavnaController implements Initializable {
             stage.show();
 
             stage.setOnHiding( event -> {
-                Grad noviGrad = gradController.getGrad();
-                if (noviGrad != null) {
-                    dao.izmijeniGrad(noviGrad);
+                if (grad != null) {
+                    dao.izmijeniGrad(grad);
                     listGradovi.setAll(dao.gradovi());
                 }
             } );
@@ -201,7 +200,8 @@ public class GlavnaController implements Initializable {
     // Metoda za potrebe testova, vraća bazu u polazno stanje
     public void resetujBazu() {
         GeografijaDAO.removeInstance();
-        File dbfile = new File("baza.db");
+        //File dbfile = new File("baza.db");
+        File dbfile = new File(System.getProperty("user.home") + "/baza.db");
         dbfile.delete();
         dao = GeografijaDAO.getInstance();
     }

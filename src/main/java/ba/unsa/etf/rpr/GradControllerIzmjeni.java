@@ -138,8 +138,10 @@ public class GradControllerIzmjeni implements Initializable {
                     grad.setBrojStanovnika(Integer.parseInt(fieldBrojStanovnika.getText()));
                     grad.setDrzava(choiceDrzava.getValue());
                     grad.setPbroj(Integer.parseInt(fieldPBroj.getText()));
-                    Stage stage = (Stage) fieldNaziv.getScene().getWindow();
-                    stage.close();
+                    Platform.runLater(() -> {
+                        Stage stage = (Stage) fieldNaziv.getScene().getWindow();
+                        stage.close();
+                    });
                 } else {
                     Platform.runLater(() -> {
                         fieldPBroj.getStyleClass().removeAll("poljeNijeIspravno");
